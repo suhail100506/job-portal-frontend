@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from './Components/Navbar';
+import Footer from './Components/Footer';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import Dashboard from './Components/Dashboard';
@@ -15,7 +15,7 @@ import AdminPanel from './Components/AdminPanel';
 import RecruiterPanel from './Components/RecruiterPanel';
 import RecruiterHome from './pages/RecruiterHome';
 import NotFound from './Components/NotFound';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 const App = () => {
   return (
