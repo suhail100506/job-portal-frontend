@@ -1,23 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
     const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'jobseeker' });
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { register, user } = useAuth();
+
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const { data } = await axios.post('http://localhost:5000/auth/register', formData, { withCredentials: true });
-            if (data.success) {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user));
-                navigate('/dashboard');
-            }
-        } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed');
+        const result = await register(formData);
+        if (result.success) {
+            navigate('/');
+        } else {
+            setError(result.message);
         }
     };
 
@@ -34,7 +37,7 @@ const Register = () => {
                     <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} className="w-full p-2 mb-4 border rounded" required minLength="6" />
                     <select name="role" value={formData.role} onChange={handleChange} className="w-full p-2 mb-4 border rounded">
                         <option value="jobseeker">Job Seeker</option>
-                        <option value="employer">Employer</option>
+                        <option value="recruiter">Recruiter</option>
                     </select>
                     <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Register</button>
                 </form>
