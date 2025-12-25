@@ -69,7 +69,7 @@ const Dashboard = () => {
                             <div className="text-center py-12">
                                 <p className="text-gray-500 mb-4">You haven't posted any jobs yet.</p>
                                 <Link
-                                    to="/add-job"
+                                    to="/post-job"
                                     className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
                                 >
                                     Post Your First Job

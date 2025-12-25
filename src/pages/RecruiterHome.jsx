@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import API from '../utils/api';
 
 const RecruiterHome = () => {
     const { user } = useAuth();
@@ -25,13 +26,13 @@ const RecruiterHome = () => {
             setLoading(true);
             const token = localStorage.getItem('token');
 
-            const jobsResponse = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/jobs', {
+            const jobsResponse = await API.get('/jobs', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
             const myJobs = jobsResponse.data.filter(job => job.postedBy._id === user._id);
 
-            const applicationsResponse = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/applications', {
+            const applicationsResponse = await API.get('/applications', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 

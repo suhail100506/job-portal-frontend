@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import API from '../utils/api';
 
 const AddJob = () => {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ const AddJob = () => {
             setLoading(true);
             setError('');
             const token = localStorage.getItem('token');
-            await axios.post('https://job-portal-backend-gcjw.onrender.com/api/jobs', formData, {
+            await API.post('/jobs', formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

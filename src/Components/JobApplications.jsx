@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import API from '../utils/api';
 
 const JobApplications = () => {
     const [applications, setApplications] = useState([]);
@@ -15,7 +16,7 @@ const JobApplications = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            const response = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/applications/my-applications', {
+            const response = await API.get('/applications/my-applications', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

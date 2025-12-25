@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import Navbar from './Components/Navbar';
-import Footer from './Components/Footer';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import Dashboard from './Components/Dashboard';
@@ -15,7 +15,7 @@ import AdminPanel from './Components/AdminPanel';
 import RecruiterPanel from './Components/RecruiterPanel';
 import RecruiterHome from './pages/RecruiterHome';
 import NotFound from './Components/NotFound';
-import ProtectedRoute from './Components/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -66,6 +66,10 @@ const App = () => {
                     <AddJob />
                   </ProtectedRoute>
                 }
+              />
+              <Route
+                path="/post-job"
+                element={<Navigate to="/add-job" replace />}
               />
               <Route
                 path="/my-applications"

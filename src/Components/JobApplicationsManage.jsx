@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import API from '../utils/api';
 
 const JobApplicationsManage = () => {
     const { jobId } = useParams();
@@ -18,7 +19,7 @@ const JobApplicationsManage = () => {
             setLoading(true);
             const token = localStorage.getItem('token');
 
-            const jobResponse = await axios.get(`https://job-portal-backend-gcjw.onrender.com/api/jobs/${jobId}`, {
+            const jobResponse = await API.get(`/jobs/${jobId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setJob(jobResponse.data);

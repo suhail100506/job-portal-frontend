@@ -43,7 +43,7 @@ const AdminPanel = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`https://job-portal-backend-gcjw.onrender.com/api/users/${userId}`, {
+            await API.delete(`/users/${userId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setUsers(users.filter(u => u._id !== userId));
@@ -58,7 +58,7 @@ const AdminPanel = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`https://job-portal-backend-gcjw.onrender.com/api/jobs/${jobId}`, {
+            await API.delete(`/jobs/${jobId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setJobs(jobs.filter(j => j._id !== jobId));

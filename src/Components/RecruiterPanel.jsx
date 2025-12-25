@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import API from '../utils/api';
 
 const RecruiterPanel = () => {
     const { user } = useAuth();
@@ -27,14 +28,14 @@ const RecruiterPanel = () => {
             setLoading(true);
             const token = localStorage.getItem('token');
 
-            const jobsResponse = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/jobs', {
+            const jobsResponse = await axios.get('http://localhost:5000/api/jobs', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
             const myJobs = jobsResponse.data.filter(job => job.postedBy._id === user._id);
             setJobs(myJobs);
 
-            const applicationsResponse = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/applications', {
+            const applicationsResponse = await API.get('/applications', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setApplications(applicationsResponse.data);
@@ -61,7 +62,7 @@ const RecruiterPanel = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`https://job-portal-backend-gcjw.onrender.com/api/jobs/${jobId}`, {
+            await API.delete(`/jobs/${jobId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setJobs(jobs.filter(j => j._id !== jobId));
@@ -76,7 +77,7 @@ const RecruiterPanel = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `https://job-portal-backend-gcjw.onrender.com/api/applications/${applicationId}/status`,
+                `http://localhost:5000/api/applications/${applicationId}/status`,
                 { status: newStatus },
                 { headers: { 'Authorization': `Bearer ${token}` } }
             );

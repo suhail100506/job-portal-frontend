@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import API from '../utils/api';
 
 const JobDetails = () => {
     const { id } = useParams();
@@ -26,7 +27,7 @@ const JobDetails = () => {
     const fetchJobDetails = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`https://job-portal-backend-gcjw.onrender.com/api/jobs/${id}`);
+            const response = await API.get(`/jobs/${id}`);
             setJob(response.data);
             setError('');
         } catch (err) {
@@ -41,7 +42,7 @@ const JobDetails = () => {
         try {
             setCheckingApplication(true);
             const token = localStorage.getItem('token');
-            const response = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/applications/my-applications', {
+            const response = await API.get('/applications/my-applications', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const applied = response.data.some(app => app.job._id === id);
@@ -70,7 +71,7 @@ const JobDetails = () => {
             }
 
             const token = localStorage.getItem('token');
-            await axios.post('https://job-portal-backend-gcjw.onrender.com/api/applications', formData, {
+            await API.post('/applications', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
