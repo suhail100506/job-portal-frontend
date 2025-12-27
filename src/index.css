@@ -1,12 +1,1 @@
 @import "tailwindcss";
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        color-scheme: dark;
-    }
-}
-
-/* Smooth transitions for theme changes */
-* {
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-}
