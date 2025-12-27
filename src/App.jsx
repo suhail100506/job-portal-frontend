@@ -15,7 +15,7 @@ import AdminPanel from './Components/AdminPanel';
 import RecruiterPanel from './Components/RecruiterPanel';
 import RecruiterHome from './pages/RecruiterHome';
 import NotFound from './Components/NotFound';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 const App = () => {
   return (
