@@ -1,21 +1,21 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Login from './components/Login';
-import Register from './components/Register';
-import Dashboard from './components/Dashboard';
-import Home from './components/Home';
-import JobListing from './components/JobListing';
-import JobDetails from './components/JobDetails';
-import AddJob from './components/AddJob';
-import JobApplications from './components/JobApplications';
-import JobApplicationsManage from './components/JobApplicationsManage';
-import AdminPanel from './components/AdminPanel';
-import RecruiterPanel from './components/RecruiterPanel';
-import RecruiterHome from './pages/RecruiterHome';
-import NotFound from './components/NotFound';
-import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext.jsx';
+import Navbar from './components/Navbar.jsx';
+import Footer from './components/Footer.jsx';
+import Login from './components/Login.jsx';
+import Register from './components/Register.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import Home from './components/Home.jsx';
+import JobListing from './components/JobListing.jsx';
+import JobDetails from './components/JobDetails.jsx';
+import AddJob from './components/AddJob.jsx';
+import JobApplications from './components/JobApplications.jsx';
+import JobApplicationsManage from './components/JobApplicationsManage.jsx';
+import AdminPanel from './components/AdminPanel.jsx';
+import RecruiterPanel from './components/RecruiterPanel.jsx';
+import RecruiterHome from './pages/RecruiterHome.jsx';
+import NotFound from './components/NotFound.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 const App = () => {
   return (
