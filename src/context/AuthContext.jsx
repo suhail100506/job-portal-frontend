@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (token) {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             fetchUser();
         } else {
             setLoading(false);
@@ -28,8 +27,10 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = async () => {
         try {
-            const response = await API.get('/users/profile');
-            setUser(response.data);
+            const response = await API.get('/auth/me', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setUser(response.data.user); // Backend returns { success: true, user: {...} }
         } catch (error) {
             console.error('Error fetching user:', error);
             logout();
@@ -83,7 +84,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         setToken(null);
         setUser(null);
-        delete axios.defaults.headers.common['Authorization'];
     };
 
     const value = {

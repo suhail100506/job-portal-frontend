@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import { Link } from 'react-router-dom';
+import API from '../utils/api';
 
 const AdminPanel = () => {
     const [activeTab, setActiveTab] = useState('users');
@@ -19,12 +20,12 @@ const AdminPanel = () => {
             const token = localStorage.getItem('token');
 
             if (activeTab === 'users') {
-                const response = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/users', {
+                const response = await API.get('/users', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 setUsers(response.data);
             } else {
-                const response = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/jobs', {
+                const response = await API.get('/jobs', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 setJobs(response.data);
@@ -71,8 +72,8 @@ const AdminPanel = () => {
     const handleUpdateUserRole = async (userId, newRole) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(
-                `https://job-portal-backend-gcjw.onrender.com/api/users/${userId}/role`,
+            await API.put(
+                `/users/${userId}/role`,
                 { role: newRole },
                 { headers: { 'Authorization': `Bearer ${token}` } }
             );

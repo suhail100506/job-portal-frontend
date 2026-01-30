@@ -28,7 +28,7 @@ const RecruiterPanel = () => {
             setLoading(true);
             const token = localStorage.getItem('token');
 
-            const jobsResponse = await axios.get('https://job-portal-backend-gcjw.onrender.com/api/jobs', {
+            const jobsResponse = await API.get('/jobs', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -76,8 +76,8 @@ const RecruiterPanel = () => {
     const handleUpdateApplicationStatus = async (applicationId, newStatus) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(
-                `https://job-portal-backend-gcjw.onrender.com/api/applications/${applicationId}/status`,
+            await API.put(
+                `/applications/${applicationId}/status`,
                 { status: newStatus },
                 { headers: { 'Authorization': `Bearer ${token}` } }
             );
