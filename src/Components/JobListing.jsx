@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import JobCard from '../components/JobCard';
+import JobCard from './JobCard';
 import API from '../utils/api';
 
 const JobListing = () => {
