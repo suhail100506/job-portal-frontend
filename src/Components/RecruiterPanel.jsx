@@ -92,14 +92,14 @@ const RecruiterPanel = () => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen dark:bg-gray-900">
+            <div className="flex justify-center items-center min-h-screen">
                 <div className="text-xl text-gray-600 dark:text-gray-300">Loading...</div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors duration-300">
+        <div className="min-h-screen py-8 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>

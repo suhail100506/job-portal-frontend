@@ -2,12 +2,12 @@
 
 .dashboard-container {
     min-height: calc(100vh - 64px);
-    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+    /* background: transparent; - inherited from body */
     padding: 40px 20px;
 }
 
 [data-theme="dark"] .dashboard-container {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    /* Transparent */
 }
 
 .loading-state {

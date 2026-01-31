@@ -2,7 +2,7 @@
 
 .home-container {
     min-height: calc(100vh - 64px);
-    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+    /* background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +17,7 @@
 }
 
 [data-theme="dark"] .home-container {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    /* background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); */
     /* Illustration Variables Dark Mode */
     --ill-primary: #cbd5e1;
     --ill-secondary: #334155;
