@@ -96,8 +96,8 @@ const JobDetails = () => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="text-xl text-gray-600">Loading job details...</div>
+            <div className="flex justify-center items-center min-h-screen dark:bg-gray-900">
+                <div className="text-xl text-gray-600 dark:text-gray-300">Loading job details...</div>
             </div>
         );
     }
@@ -114,10 +114,10 @@ const JobDetails = () => {
 
     if (!job) {
         return (
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 dark:bg-gray-900 min-h-screen">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Job not found</h2>
-                    <Link to="/jobs" className="text-blue-600 hover:underline">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Job not found</h2>
+                    <Link to="/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">
                         Back to Jobs
                     </Link>
                 </div>
@@ -126,72 +126,72 @@ const JobDetails = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors duration-300">
             <div className="container mx-auto px-4 max-w-4xl">
-                <div className="bg-white rounded-lg shadow-md p-8 mb-6">
-                    <Link to="/jobs" className="text-blue-600 hover:underline mb-4 inline-block">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-6 border dark:border-gray-700 transition-colors">
+                    <Link to="/jobs" className="text-blue-600 dark:text-blue-400 hover:underline mb-4 inline-block">
                         ← Back to Jobs
                     </Link>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4">{job.title}</h1>
-                    <div className="flex flex-wrap gap-4 text-gray-600 mb-4">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{job.title}</h1>
+                    <div className="flex flex-wrap gap-4 text-gray-600 dark:text-gray-300 mb-4">
                         <div className="flex items-center">
-                            <span className="font-semibold text-gray-900">{job.company}</span>
+                            <span className="font-semibold text-gray-900 dark:text-white">{job.company}</span>
                         </div>
                         <div className="flex items-center">
                             <span>📍 {job.location}</span>
                         </div>
                         <div className="flex items-center">
-                            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300 rounded-full text-sm">
                                 {job.type}
                             </span>
                         </div>
                         <div className="flex items-center">
-                            <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                            <span className="px-3 py-1 bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-300 rounded-full text-sm">
                                 {job.category}
                             </span>
                         </div>
                     </div>
                     {job.salary && (
-                        <p className="text-xl font-semibold text-green-600 mb-2">💰 {job.salary}</p>
+                        <p className="text-xl font-semibold text-green-600 dark:text-green-400 mb-2">💰 {job.salary}</p>
                     )}
-                    <p className="text-gray-500 text-sm">
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">
                         Posted on {new Date(job.createdAt).toLocaleDateString()}
                     </p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-md p-8 mb-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-6 border dark:border-gray-700 transition-colors">
                     <section className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">Job Description</h2>
-                        <p className="text-gray-700 whitespace-pre-line">{job.description}</p>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Job Description</h2>
+                        <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.description}</p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">Requirements</h2>
-                        <p className="text-gray-700 whitespace-pre-line">{job.requirements}</p>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Requirements</h2>
+                        <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.requirements}</p>
                     </section>
                 </div>
 
                 {user && user.role !== 'recruiter' && user.role !== 'admin' && (
-                    <div className="bg-white rounded-lg shadow-md p-8">
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border dark:border-gray-700 transition-colors">
                         {hasApplied ? (
-                            <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-                                <div className="text-green-600 text-xl font-semibold mb-2">✓ Application Submitted</div>
-                                <p className="text-gray-700 mb-4">You have already applied for this position.</p>
+                            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 text-center">
+                                <div className="text-green-600 dark:text-green-400 text-xl font-semibold mb-2">✓ Application Submitted</div>
+                                <p className="text-gray-700 dark:text-gray-300 mb-4">You have already applied for this position.</p>
                                 <Link
                                     to="/my-applications"
-                                    className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+                                    className="inline-block bg-blue-600 dark:bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition"
                                 >
                                     View My Applications
                                 </Link>
                             </div>
                         ) : checkingApplication ? (
-                            <div className="text-center text-gray-600">Checking application status...</div>
+                            <div className="text-center text-gray-600 dark:text-gray-400">Checking application status...</div>
                         ) : (
                             <>
-                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Apply for this Job</h2>
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Apply for this Job</h2>
                                 <form onSubmit={handleApply}>
                                     <div className="mb-6">
-                                        <label htmlFor="coverLetter" className="block text-gray-700 font-semibold mb-2">
+                                        <label htmlFor="coverLetter" className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
                                             Cover Letter *
                                         </label>
                                         <textarea
@@ -201,12 +201,12 @@ const JobDetails = () => {
                                             required
                                             rows="6"
                                             placeholder="Explain why you're a great fit for this position..."
-                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                                         />
                                     </div>
 
                                     <div className="mb-6">
-                                        <label htmlFor="resume" className="block text-gray-700 font-semibold mb-2">
+                                        <label htmlFor="resume" className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
                                             Resume (PDF or DOC)
                                         </label>
                                         <input
@@ -214,13 +214,13 @@ const JobDetails = () => {
                                             id="resume"
                                             accept=".pdf,.doc,.docx"
                                             onChange={(e) => setResume(e.target.files[0])}
-                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/40 dark:file:text-blue-300"
                                         />
                                     </div>
 
                                     <button
                                         type="submit"
-                                        className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold disabled:bg-gray-400"
+                                        className="w-full bg-blue-600 dark:bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition font-semibold disabled:bg-gray-400 dark:disabled:bg-gray-600"
                                         disabled={applying}
                                     >
                                         {applying ? 'Submitting...' : 'Submit Application'}
@@ -232,10 +232,10 @@ const JobDetails = () => {
                 )}
 
                 {!user && (
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
-                        <p className="text-gray-700 text-lg">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 text-center border dark:border-gray-700 transition-colors">
+                        <p className="text-gray-700 dark:text-gray-300 text-lg">
                             Please{' '}
-                            <Link to="/login" className="text-blue-600 font-semibold hover:underline">
+                            <Link to="/login" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
                                 login
                             </Link>{' '}
                             to apply for this job.

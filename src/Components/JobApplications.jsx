@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import API from '../utils/api';
+import './JobApplications.css';
 
 const JobApplications = () => {
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [filterStatus, setFilterStatus] = useState('all');
 
     useEffect(() => {
         fetchApplications();
@@ -31,113 +32,215 @@ const JobApplications = () => {
         }
     };
 
-    const getStatusBadgeClass = (status) => {
+    const getStatusColor = (status) => {
         switch (status) {
-            case 'pending':
-                return 'bg-yellow-100 text-yellow-800';
-            case 'reviewed':
-                return 'bg-blue-100 text-blue-800';
-            case 'shortlisted':
-                return 'bg-purple-100 text-purple-800';
-            case 'accepted':
-                return 'bg-green-100 text-green-800';
-            case 'rejected':
-                return 'bg-red-100 text-red-800';
-            default:
-                return 'bg-gray-100 text-gray-800';
+            case 'pending': return '#F59E0B';
+            case 'reviewed': return '#3B82F6';
+            case 'shortlisted': return '#8B5CF6';
+            case 'accepted': return '#10B981';
+            case 'rejected': return '#EF4444';
+            default: return '#6B7280';
         }
     };
 
+    const getCompanyIcon = (company) => {
+        return company ? company.charAt(0).toUpperCase() : '?';
+    };
+
+    const getCompanyColor = (index) => {
+        const colors = ['#10B981', '#F59E0B', '#EF4444', '#3B82F6', '#8B5CF6', '#EC4899'];
+        return colors[index % colors.length];
+    };
+
+    const getStats = () => {
+        return {
+            total: applications.length,
+            pending: applications.filter(app => app.status === 'pending').length,
+            accepted: applications.filter(app => app.status === 'accepted').length,
+            rejected: applications.filter(app => app.status === 'rejected').length
+        };
+    };
+
+    const filteredApplications = filterStatus === 'all'
+        ? applications
+        : applications.filter(app => app.status === filterStatus);
+
+    const stats = getStats();
+
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="text-xl text-gray-600">Loading applications...</div>
+            <div className="applications-container">
+                <div className="loading-state">Loading applications...</div>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="container mx-auto px-4 py-8">
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                    {error}
+            <div className="applications-container">
+                <div className="error-alert">
+                    <span>⚠️</span>
+                    <span>{error}</span>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
-            <div className="container mx-auto px-4">
-                <h1 className="text-3xl font-bold text-gray-900 mb-8">My Job Applications</h1>
+        <div className="applications-container">
+            {/* Hero Section */}
+            <div className="applications-hero">
+                <h1 className="applications-title">My Job Applications</h1>
+                <p className="applications-subtitle">
+                    Track all your job applications and their status in one place
+                </p>
+            </div>
 
-                {applications.length === 0 ? (
-                    <div className="bg-white rounded-lg shadow-md p-12 text-center">
-                        <div className="text-6xl mb-4">📝</div>
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                            No Applications Yet
-                        </h2>
-                        <p className="text-gray-600 mb-6">
-                            You haven't applied to any jobs yet. Start browsing and apply to your dream job!
-                        </p>
-                        <Link
-                            to="/jobs"
-                            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
-                        >
-                            Browse Jobs
-                        </Link>
+            {applications.length === 0 ? (
+                <div className="empty-state">
+                    <div className="empty-icon">📭</div>
+                    <h3 className="empty-title">No Applications Yet</h3>
+                    <p className="empty-description">
+                        You haven't applied to any jobs yet. Start browsing and apply to your dream job!
+                    </p>
+                    <Link to="/jobs" className="empty-action-btn">
+                        Browse Jobs
+                    </Link>
+                </div>
+            ) : (
+                <>
+                    {/* Stats Cards */}
+                    <div className="applications-stats">
+                        <div className="stat-card">
+                            <div className="stat-icon stat-icon-blue">
+                                📊
+                            </div>
+                            <div className="stat-info">
+                                <h3 className="stat-number">{stats.total}</h3>
+                                <p className="stat-label">Total Applications</p>
+                            </div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-icon stat-icon-yellow">
+                                ⏳
+                            </div>
+                            <div className="stat-info">
+                                <h3 className="stat-number">{stats.pending}</h3>
+                                <p className="stat-label">Pending</p>
+                            </div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-icon stat-icon-green">
+                                ✅
+                            </div>
+                            <div className="stat-info">
+                                <h3 className="stat-number">{stats.accepted}</h3>
+                                <p className="stat-label">Accepted</p>
+                            </div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-icon stat-icon-red">
+                                ❌
+                            </div>
+                            <div className="stat-info">
+                                <h3 className="stat-number">{stats.rejected}</h3>
+                                <p className="stat-label">Rejected</p>
+                            </div>
+                        </div>
                     </div>
-                ) : (
-                    <div className="grid gap-6">
-                        {applications.map((application) => (
-                            <div
-                                key={application._id}
-                                className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition"
-                            >
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="flex-1">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-2">
-                                            {application.job.title}
-                                        </h3>
-                                        <p className="text-gray-700 font-semibold mb-1">
-                                            {application.job.company}
-                                        </p>
-                                        <div className="flex flex-wrap gap-3 text-gray-600 text-sm">
-                                            <span>📍 {application.job.location}</span>
-                                            <span className="px-3 py-1 bg-gray-100 rounded-full">
-                                                {application.job.type}
-                                            </span>
-                                        </div>
+
+                    {/* Filter Tabs */}
+                    <div className="filter-tabs">
+                        <button
+                            className={`filter-tab ${filterStatus === 'all' ? 'active' : ''}`}
+                            onClick={() => setFilterStatus('all')}
+                        >
+                            All ({applications.length})
+                        </button>
+                        <button
+                            className={`filter-tab ${filterStatus === 'pending' ? 'active' : ''}`}
+                            onClick={() => setFilterStatus('pending')}
+                        >
+                            Pending ({stats.pending})
+                        </button>
+                        <button
+                            className={`filter-tab ${filterStatus === 'accepted' ? 'active' : ''}`}
+                            onClick={() => setFilterStatus('accepted')}
+                        >
+                            Accepted ({stats.accepted})
+                        </button>
+                        <button
+                            className={`filter-tab ${filterStatus === 'rejected' ? 'active' : ''}`}
+                            onClick={() => setFilterStatus('rejected')}
+                        >
+                            Rejected ({stats.rejected})
+                        </button>
+                    </div>
+
+                    {/* Applications Grid */}
+                    <div className="applications-grid">
+                        {filteredApplications.map((application, index) => (
+                            <div key={application._id} className="application-card">
+                                <div className="card-header">
+                                    <div
+                                        className="company-icon"
+                                        style={{ backgroundColor: getCompanyColor(index) }}
+                                    >
+                                        {getCompanyIcon(application.job.company)}
                                     </div>
-                                    <span
-                                        className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusBadgeClass(
-                                            application.status
-                                        )}`}
+                                    <div
+                                        className="status-badge"
+                                        style={{
+                                            backgroundColor: `${getStatusColor(application.status)}20`,
+                                            color: getStatusColor(application.status)
+                                        }}
                                     >
                                         {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
+                                    </div>
+                                </div>
+
+                                <h3 className="application-job-title">{application.job.title}</h3>
+
+                                <div className="application-meta">
+                                    <span className="meta-item">
+                                        <span className="meta-icon">🏢</span>
+                                        {application.job.company}
+                                    </span>
+                                    <span className="meta-item">
+                                        <span className="meta-icon">📍</span>
+                                        {application.job.location}
                                     </span>
                                 </div>
 
-                                <div className="border-t pt-4 mt-4">
-                                    <p className="text-gray-600 text-sm mb-3">
-                                        Applied on {new Date(application.createdAt).toLocaleDateString('en-US', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric'
-                                        })}
-                                    </p>
+                                <div className="application-tags">
+                                    <span className="tag">{application.job.type || 'Full Time'}</span>
+                                    {application.job.category && (
+                                        <span className="tag">{application.job.category}</span>
+                                    )}
+                                </div>
+
+                                <div className="application-footer">
+                                    <span className="application-date">
+                                        Applied {new Date(application.createdAt).toLocaleDateString()}
+                                    </span>
                                     <Link
                                         to={`/jobs/${application.job._id}`}
-                                        className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm font-semibold"
+                                        className="view-job-btn"
                                     >
-                                        View Job Details
+                                        View Job →
                                     </Link>
                                 </div>
                             </div>
                         ))}
                     </div>
-                )}
-            </div>
+
+                    {filteredApplications.length === 0 && (
+                        <div className="no-results">
+                            <p>No applications found for this filter.</p>
+                        </div>
+                    )}
+                </>
+            )}
         </div>
     );
 };

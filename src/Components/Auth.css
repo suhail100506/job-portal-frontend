@@ -1,0 +1,230 @@
+/* Auth.css */
+.auth-page-container {
+    background-color: #2E8B57;
+    /* Matches the green in the image */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .auth-page-container {
+    background-color: #0f172a;
+}
+
+.auth-content-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Left Card Section */
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .auth-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+}
+
+.auth-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #000;
+}
+
+[data-theme="dark"] .auth-title {
+    color: #f1f5f9;
+}
+
+.auth-form-group {
+    margin-bottom: 20px;
+}
+
+.auth-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+[data-theme="dark"] .auth-label {
+    color: #cbd5e1;
+}
+
+.auth-input {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    background: transparent;
+}
+
+[data-theme="dark"] .auth-input {
+    color: #f1f5f9;
+    border-bottom-color: #475569;
+}
+
+.auth-input:focus {
+    border-bottom-color: #000;
+}
+
+.auth-input::placeholder {
+    color: #aaa;
+}
+
+.auth-submit-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    /* Pill shape */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    margin-top: 10px;
+}
+
+.auth-submit-btn:hover {
+    opacity: 0.9;
+}
+
+.auth-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.auth-footer a {
+    color: #2E8B57;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Right Text Section */
+.auth-text-section {
+    color: white;
+    flex: 1;
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-heading {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.auth-description {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.auth-brand-pill {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    width: fit-content;
+    margin-bottom: 40px;
+}
+
+.auth-testimonial {
+    margin-top: auto;
+}
+
+.auth-testimonial-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-quote {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 500px;
+}
+
+.auth-user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.auth-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+    .auth-page-container {
+        padding: 20px;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .auth-content-wrapper {
+        flex-direction: column-reverse;
+        /* Form on top or bottom? usually form on top for mobile */
+        gap: 20px;
+    }
+
+    .auth-card {
+        max-width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .auth-text-section {
+        padding-left: 0;
+        text-align: center;
+        align-items: center;
+    }
+
+    .auth-heading {
+        font-size: 2.5rem;
+    }
+}

@@ -60,19 +60,19 @@ const JobApplicationsManage = () => {
 
     const getStatusColor = (status) => {
         switch (status) {
-            case 'pending': return 'bg-yellow-100 text-yellow-800';
-            case 'reviewed': return 'bg-blue-100 text-blue-800';
-            case 'shortlisted': return 'bg-purple-100 text-purple-800';
-            case 'accepted': return 'bg-green-100 text-green-800';
-            case 'rejected': return 'bg-red-100 text-red-800';
-            default: return 'bg-gray-100 text-gray-800';
+            case 'pending': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300';
+            case 'reviewed': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300';
+            case 'shortlisted': return 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300';
+            case 'accepted': return 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300';
+            case 'rejected': return 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300';
+            default: return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
         }
     };
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="text-xl text-gray-600">Loading applications...</div>
+            <div className="flex justify-center items-center min-h-screen dark:bg-gray-900">
+                <div className="text-xl text-gray-600 dark:text-gray-300">Loading applications...</div>
             </div>
         );
     }
@@ -88,45 +88,45 @@ const JobApplicationsManage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <Link to="/dashboard" className="text-blue-600 hover:underline mb-4 inline-block">
+                <Link to="/dashboard" className="text-blue-600 dark:text-blue-400 hover:underline mb-4 inline-block">
                     ← Back to Dashboard
                 </Link>
 
                 {/* Job Info */}
                 {job && (
-                    <div className="bg-white rounded-lg shadow p-6 mb-8">
-                        <h1 className="text-2xl font-bold text-gray-900 mb-2">{job.title}</h1>
-                        <p className="text-gray-600">{job.company} • {job.location}</p>
-                        <p className="text-sm text-gray-500 mt-2">
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8 border dark:border-gray-700 transition-colors">
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{job.title}</h1>
+                        <p className="text-gray-600 dark:text-gray-400">{job.company} • {job.location}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
                             Posted: {new Date(job.createdAt).toLocaleDateString()}
                         </p>
                     </div>
                 )}
 
                 {/* Applications */}
-                <div className="bg-white rounded-lg shadow p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 border dark:border-gray-700 transition-colors">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
                         Applications ({applications.length})
                     </h2>
 
                     {applications.length === 0 ? (
                         <div className="text-center py-12">
-                            <p className="text-gray-500">No applications received yet.</p>
+                            <p className="text-gray-500 dark:text-gray-400">No applications received yet.</p>
                         </div>
                     ) : (
                         <div className="space-y-6">
                             {applications.map((application) => (
-                                <div key={application._id} className="border rounded-lg p-6">
+                                <div key={application._id} className="border dark:border-gray-700 rounded-lg p-6 bg-gray-50 dark:bg-gray-700/30">
                                     <div className="flex justify-between items-start mb-4">
                                         <div>
-                                            <h3 className="text-lg font-semibold text-gray-900">
+                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                                                 {application.applicant.name}
                                             </h3>
-                                            <p className="text-gray-600">{application.applicant.email}</p>
+                                            <p className="text-gray-600 dark:text-gray-400">{application.applicant.email}</p>
                                             {application.applicant.phone && (
-                                                <p className="text-gray-600">{application.applicant.phone}</p>
+                                                <p className="text-gray-600 dark:text-gray-400">{application.applicant.phone}</p>
                                             )}
                                         </div>
                                         <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(application.status)}`}>
@@ -135,8 +135,8 @@ const JobApplicationsManage = () => {
                                     </div>
 
                                     <div className="mb-4">
-                                        <h4 className="font-semibold text-gray-900 mb-2">Cover Letter:</h4>
-                                        <p className="text-gray-700 whitespace-pre-line">{application.coverLetter}</p>
+                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Cover Letter:</h4>
+                                        <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{application.coverLetter}</p>
                                     </div>
 
                                     {application.resume && (
@@ -145,44 +145,45 @@ const JobApplicationsManage = () => {
                                                 href={`${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-blue-600 hover:underline"
+                                                className="text-blue-600 dark:text-blue-400 hover:underline"
                                             >
                                                 📄 View Resume
                                             </a>
                                         </div>
                                     )}
 
-                                    <div className="text-sm text-gray-500 mb-4">
+                                    <div className="text-sm text-gray-500 dark:text-gray-500 mb-4">
                                         Applied on: {new Date(application.createdAt).toLocaleDateString()}
                                     </div>
 
+                                    {/* Action Buttons */}
                                     {/* Action Buttons */}
                                     <div className="flex flex-wrap gap-2">
                                         <button
                                             onClick={() => handleStatusUpdate(application._id, 'reviewed')}
                                             disabled={application.status === 'reviewed'}
-                                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
+                                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:disabled:bg-gray-600 transition-colors"
                                         >
                                             Mark Reviewed
                                         </button>
                                         <button
                                             onClick={() => handleStatusUpdate(application._id, 'shortlisted')}
                                             disabled={application.status === 'shortlisted'}
-                                            className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-400"
+                                            className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-400 dark:bg-purple-600 dark:hover:bg-purple-700 dark:disabled:bg-gray-600 transition-colors"
                                         >
                                             Shortlist
                                         </button>
                                         <button
                                             onClick={() => handleStatusUpdate(application._id, 'accepted')}
                                             disabled={application.status === 'accepted'}
-                                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
+                                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400 dark:bg-green-600 dark:hover:bg-green-700 dark:disabled:bg-gray-600 transition-colors"
                                         >
                                             Accept
                                         </button>
                                         <button
                                             onClick={() => handleStatusUpdate(application._id, 'rejected')}
                                             disabled={application.status === 'rejected'}
-                                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-gray-400"
+                                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-gray-400 dark:bg-red-600 dark:hover:bg-red-700 dark:disabled:bg-gray-600 transition-colors"
                                         >
                                             Reject
                                         </button>

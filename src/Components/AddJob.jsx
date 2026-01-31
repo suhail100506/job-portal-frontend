@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import API from '../utils/api';
+import './AddJob.css';
 
 const AddJob = () => {
     const navigate = useNavigate();
@@ -16,8 +16,8 @@ const AddJob = () => {
         description: '',
         requirements: '',
         salary: '',
-        type: 'Full-time',
-        category: 'IT'
+        type: 'Full Time',
+        category: 'Development'
     });
 
     const handleChange = (e) => {
@@ -36,7 +36,7 @@ const AddJob = () => {
                 }
             });
             alert('Job posted successfully!');
-            navigate('/jobs');
+            navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to post job');
             console.error('Error posting job:', err);
@@ -46,72 +46,94 @@ const AddJob = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="bg-white rounded-lg shadow p-8">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-6">Post a New Job</h1>
+        <div className="add-job-container">
+            {/* Hero Section */}
+            <div className="add-job-hero">
+                <h1 className="add-job-title">Post a New Job</h1>
+                <p className="add-job-subtitle">
+                    Fill in the details below to create a new job posting and attract top talent
+                </p>
+            </div>
 
-                    {error && (
-                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                            {error}
+            {/* Form Card */}
+            <div className="add-job-form-wrapper">
+                {error && (
+                    <div className="error-alert">
+                        <span className="error-icon">⚠️</span>
+                        <span>{error}</span>
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="add-job-form">
+                    {/* Basic Information Section */}
+                    <div className="form-section">
+                        <h2 className="section-title">
+                            <span className="section-icon">📝</span>
+                            Basic Information
+                        </h2>
+
+                        <div className="form-grid">
+                            <div className="form-group full-width">
+                                <label htmlFor="title" className="form-label">
+                                    Job Title <span className="required">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                    required
+                                    className="form-input"
+                                    placeholder="e.g., Senior Software Engineer"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="company" className="form-label">
+                                    Company Name <span className="required">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="company"
+                                    name="company"
+                                    value={formData.company}
+                                    onChange={handleChange}
+                                    required
+                                    className="form-input"
+                                    placeholder="e.g., Tech Corporation"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="location" className="form-label">
+                                    Location <span className="required">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                    value={formData.location}
+                                    onChange={handleChange}
+                                    required
+                                    className="form-input"
+                                    placeholder="e.g., New York, NY or Remote"
+                                />
+                            </div>
                         </div>
-                    )}
+                    </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Job Details Section */}
+                    <div className="form-section">
+                        <h2 className="section-title">
+                            <span className="section-icon">💼</span>
+                            Job Details
+                        </h2>
 
-                        <div>
-                            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-                                Job Title *
-                            </label>
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
-                                value={formData.title}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="e.g., Senior Software Engineer"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                                Company Name *
-                            </label>
-                            <input
-                                type="text"
-                                id="company"
-                                name="company"
-                                value={formData.company}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="e.g., Tech Corporation"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
-                                Location *
-                            </label>
-                            <input
-                                type="text"
-                                id="location"
-                                name="location"
-                                value={formData.location}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="e.g., New York, NY"
-                            />
-                        </div>
-
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Job Type *
+                        <div className="form-grid">
+                            <div className="form-group">
+                                <label htmlFor="type" className="form-label">
+                                    Job Type <span className="required">*</span>
                                 </label>
                                 <select
                                     id="type"
@@ -119,19 +141,19 @@ const AddJob = () => {
                                     value={formData.type}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="form-select"
                                 >
-                                    <option value="Full-time">Full-time</option>
-                                    <option value="Part-time">Part-time</option>
+                                    <option value="Full Time">Full Time</option>
+                                    <option value="Part Time">Part Time</option>
                                     <option value="Contract">Contract</option>
                                     <option value="Internship">Internship</option>
                                     <option value="Remote">Remote</option>
                                 </select>
                             </div>
 
-                            <div>
-                                <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Category *
+                            <div className="form-group">
+                                <label htmlFor="category" className="form-label">
+                                    Category <span className="required">*</span>
                                 </label>
                                 <select
                                     id="category"
@@ -139,11 +161,14 @@ const AddJob = () => {
                                     value={formData.category}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="form-select"
                                 >
-                                    <option value="IT">IT</option>
-                                    <option value="Finance">Finance</option>
+                                    <option value="Development">Development</option>
+                                    <option value="Design">Design</option>
                                     <option value="Marketing">Marketing</option>
+                                    <option value="Project Management">Project Management</option>
+                                    <option value="Customer Services">Customer Services</option>
+                                    <option value="Accounting / Finance">Accounting / Finance</option>
                                     <option value="Sales">Sales</option>
                                     <option value="Healthcare">Healthcare</option>
                                     <option value="Education">Education</option>
@@ -151,26 +176,34 @@ const AddJob = () => {
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
-                        </div>
 
-                        <div>
-                            <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-2">
-                                Salary Range
-                            </label>
-                            <input
-                                type="text"
-                                id="salary"
-                                name="salary"
-                                value={formData.salary}
-                                onChange={handleChange}
-                                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="e.g., ₹80,000 - ₹120,000 per year"
-                            />
+                            <div className="form-group full-width">
+                                <label htmlFor="salary" className="form-label">
+                                    Salary Range
+                                </label>
+                                <input
+                                    type="text"
+                                    id="salary"
+                                    name="salary"
+                                    value={formData.salary}
+                                    onChange={handleChange}
+                                    className="form-input"
+                                    placeholder="e.g., $80,000 - $120,000/year"
+                                />
+                            </div>
                         </div>
+                    </div>
 
-                        <div>
-                            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-                                Job Description *
+                    {/* Description Section */}
+                    <div className="form-section">
+                        <h2 className="section-title">
+                            <span className="section-icon">📄</span>
+                            Job Description
+                        </h2>
+
+                        <div className="form-group">
+                            <label htmlFor="description" className="form-label">
+                                Description <span className="required">*</span>
                             </label>
                             <textarea
                                 id="description"
@@ -179,14 +212,14 @@ const AddJob = () => {
                                 onChange={handleChange}
                                 required
                                 rows="6"
-                                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="form-textarea"
                                 placeholder="Describe the role, responsibilities, and what the candidate will do..."
                             />
                         </div>
 
-                        <div>
-                            <label htmlFor="requirements" className="block text-sm font-medium text-gray-700 mb-2">
-                                Requirements *
+                        <div className="form-group">
+                            <label htmlFor="requirements" className="form-label">
+                                Requirements <span className="required">*</span>
                             </label>
                             <textarea
                                 id="requirements"
@@ -195,30 +228,40 @@ const AddJob = () => {
                                 onChange={handleChange}
                                 required
                                 rows="6"
-                                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="form-textarea"
                                 placeholder="List required skills, qualifications, and experience..."
                             />
                         </div>
+                    </div>
 
-
-                        <div className="flex gap-4">
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="flex-1 bg-blue-600 text-white py-3 rounded hover:bg-blue-700 font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed"
-                            >
-                                {loading ? 'Posting...' : 'Post Job'}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => navigate('/jobs')}
-                                className="flex-1 bg-gray-200 text-gray-700 py-3 rounded hover:bg-gray-300 font-semibold"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    {/* Action Buttons */}
+                    <div className="form-actions">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/dashboard')}
+                            className="btn-cancel"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="btn-submit"
+                        >
+                            {loading ? (
+                                <>
+                                    <span className="spinner"></span>
+                                    Posting...
+                                </>
+                            ) : (
+                                <>
+                                    <span>✓</span>
+                                    Post Job
+                                </>
+                            )}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

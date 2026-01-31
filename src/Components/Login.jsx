@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import './Auth.css';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -26,32 +27,60 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-md w-96">
-                <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-                {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">{error}</div>}
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full p-2 mb-4 border rounded"
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full p-2 mb-4 border rounded"
-                        required
-                    />
-                    <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Login</button>
-                </form>
-                <p className="text-center mt-4 text-sm text-gray-600">
-                    Don't have an account? <Link to="/register" className="text-blue-600 hover:underline">Register</Link>
-                </p>
+        <div className="auth-page-container">
+            <div className="auth-content-wrapper">
+                {/* Left Side - Login Form */}
+                <div className="auth-card">
+                    <h2 className="auth-title">Sign in</h2>
+
+                    {error && <div style={{ color: 'red', marginBottom: '15px' }}>{error}</div>}
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="auth-form-group">
+                            <label className="auth-label">Your email</label>
+                            <input
+                                type="email"
+                                placeholder="example@mail.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="auth-input"
+                                required
+                            />
+                        </div>
+
+                        <div className="auth-form-group">
+                            <label className="auth-label">Your password</label>
+                            <input
+                                type="password"
+                                placeholder="********"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="auth-input"
+                                required
+                            />
+                        </div>
+
+                        <button type="submit" className="auth-submit-btn">
+                            Submit
+                        </button>
+                    </form>
+
+                    <div className="auth-footer">
+                        Don't have an account? <Link to="/register">Register</Link>
+                    </div>
+                </div>
+
+                {/* Right Side - Branding/Text */}
+                <div className="auth-text-section">
+                    <h1 className="auth-heading">Build your dream team with our Job Portal</h1>
+                    <p className="auth-description">
+                        Connect with top talent and streamline your recruitment process efficiently.
+                    </p>
+
+                    <div className="auth-brand-pill">
+                        Recruiter Platform
+                    </div>
+                </div>
             </div>
         </div>
     );

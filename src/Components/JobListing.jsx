@@ -1,45 +1,191 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import JobCard from './JobCard';
+import { useNavigate } from 'react-router-dom';
 import API from '../utils/api';
+import './JobListing.css';
 
 const JobListing = () => {
-    const [jobs, setJobs] = useState([]);
+    const [allJobs, setAllJobs] = useState([]);
+    const [filteredJobs, setFilteredJobs] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [filters, setFilters] = useState({ keyword: '', location: '', type: '', category: '' });
+    const [activeCategory, setActiveCategory] = useState('All');
+    const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+    const [bookmarkedJobs, setBookmarkedJobs] = useState([]);
+    const navigate = useNavigate();
 
-    useEffect(() => { fetchJobs(); }, []);
+    const categories = [
+        { name: 'Customer Services', icon: '🎧' },
+        { name: 'Project Management', icon: '📊' },
+        { name: 'Development', icon: '⚙️' },
+        { name: 'Design', icon: '🎨' },
+        { name: 'Marketing', icon: '📈' },
+        { name: 'Accounting / Finance', icon: '💼' }
+    ];
+
+    useEffect(() => {
+        fetchJobs();
+    }, []);
+
+    useEffect(() => {
+        applyFilters();
+    }, [activeCategory, allJobs]);
 
     const fetchJobs = async () => {
-        try { setLoading(true); const { data } = await API.get('/jobs'); setJobs(data); }
-        catch (err) { console.error(err); } finally { setLoading(false); }
+        try {
+            setLoading(true);
+            const { data } = await API.get('/jobs');
+            setAllJobs(data);
+            setFilteredJobs(data);
+        } catch (err) {
+            console.error('Error fetching jobs:', err);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        const params = new URLSearchParams(Object.entries(filters).filter(([_, v]) => v));
-        try { const { data } = await API.get(`/jobs/search?${params}`); setJobs(data); }
-        catch (err) { console.error(err); }
+    const applyFilters = () => {
+        let filtered = [...allJobs];
+
+        if (activeCategory !== 'All') {
+            filtered = filtered.filter(job =>
+                job.category && job.category.toLowerCase().includes(activeCategory.toLowerCase())
+            );
+        }
+
+        setFilteredJobs(filtered);
     };
 
-    if (loading) return <div className="flex justify-center items-center min-h-screen"><div className="text-xl">Loading...</div></div>;
+    const handleJobClick = (jobId) => {
+        navigate(`/jobs/${jobId}`);
+    };
+
+    const toggleBookmark = (e, jobId) => {
+        e.stopPropagation();
+        setBookmarkedJobs(prev =>
+            prev.includes(jobId)
+                ? prev.filter(id => id !== jobId)
+                : [...prev, jobId]
+        );
+    };
+
+    const getCompanyIcon = (company) => {
+        return company ? company.charAt(0).toUpperCase() : '?';
+    };
+
+    const getCompanyColor = (index) => {
+        const colors = ['#10B981', '#F59E0B', '#EF4444', '#3B82F6', '#8B5CF6', '#EC4899', '#14B8A6'];
+        return colors[index % colors.length];
+    };
+
+    if (loading) {
+        return (
+            <div className="jobs-page-container">
+                <div className="loading-state">Loading jobs...</div>
+            </div>
+        );
+    }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-                    <h1 className="text-3xl font-bold mb-4">🔍 Find Jobs</h1>
-                    <form onSubmit={handleSearch} className="grid md:grid-cols-2 gap-4">
-                        <input type="text" name="keyword" placeholder="Job title..." value={filters.keyword} onChange={(e) => setFilters({ ...filters, keyword: e.target.value })} className="px-4 py-2 border rounded-lg" />
-                        <input type="text" name="location" placeholder="Location..." value={filters.location} onChange={(e) => setFilters({ ...filters, location: e.target.value })} className="px-4 py-2 border rounded-lg" />
-                        <select name="type" value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })} className="px-4 py-2 border rounded-lg"><option value="">All Types</option><option value="Full-time">Full-time</option><option value="Part-time">Part-time</option><option value="Contract">Contract</option><option value="Internship">Internship</option><option value="Remote">Remote</option></select>
-                        <select name="category" value={filters.category} onChange={(e) => setFilters({ ...filters, category: e.target.value })} className="px-4 py-2 border rounded-lg"><option value="">All Categories</option><option value="IT">IT</option><option value="Finance">Finance</option><option value="Marketing">Marketing</option><option value="Sales">Sales</option></select>
-                        <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">🔍 Search</button>
-                        <button type="button" onClick={() => { setFilters({ keyword: '', location: '', type: '', category: '' }); fetchJobs(); }} className="bg-gray-200 px-6 py-2 rounded-lg">↻ Reset</button>
-                    </form>
+        <div className="jobs-page-container">
+            <div className="jobs-page-header">
+                <h1 className="jobs-page-title">Find Your Favorite Job</h1>
+
+                {/* Category Filters */}
+                <div className="category-filter-pills">
+                    {categories.map((category) => (
+                        <button
+                            key={category.name}
+                            className={`category-pill ${activeCategory === category.name ? 'active' : ''}`}
+                            onClick={() => setActiveCategory(category.name)}
+                        >
+                            <span className="category-icon">{category.icon}</span>
+                            <span className="category-name">{category.name}</span>
+                        </button>
+                    ))}
                 </div>
-                <h2 className="text-2xl font-bold mb-4">{jobs.length} Jobs Found</h2>
-                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">{jobs.map(job => <JobCard key={job._id} job={job} />)}</div>
+            </div>
+
+            {/* View Controls */}
+            <div className="jobs-controls">
+                <button
+                    className="view-all-link"
+                    onClick={() => setActiveCategory('All')}
+                >
+                    View All Jobs →
+                </button>
+                <div className="view-mode-toggles">
+                    <button
+                        className={`view-toggle ${viewMode === 'list' ? 'active' : ''}`}
+                        onClick={() => setViewMode('list')}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <button
+                        className={`view-toggle ${viewMode === 'grid' ? 'active' : ''}`}
+                        onClick={() => setViewMode('grid')}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {/* Job Cards Grid */}
+            <div className={`jobs-grid ${viewMode}`}>
+                {filteredJobs.length === 0 ? (
+                    <div className="no-jobs-message">No jobs found for this category.</div>
+                ) : (
+                    filteredJobs.map((job, index) => (
+                        <div
+                            key={job._id}
+                            className="job-card-modern"
+                            onClick={() => handleJobClick(job._id)}
+                        >
+                            {/* Bookmark */}
+                            <button
+                                className={`bookmark-btn ${bookmarkedJobs.includes(job._id) ? 'active' : ''}`}
+                                onClick={(e) => toggleBookmark(e, job._id)}
+                            >
+                                {bookmarkedJobs.includes(job._id) ? '⭐' : '☆'}
+                            </button>
+
+                            {/* Job Type and Location Tags */}
+                            <div className="job-meta-tags">
+                                {job.type && <span className="meta-tag">{job.type}</span>}
+                                {job.location && <span className="meta-tag">{job.location}</span>}
+                            </div>
+
+                            {/* Company Icon */}
+                            <div
+                                className="company-logo-modern"
+                                style={{ backgroundColor: getCompanyColor(index) }}
+                            >
+                                {getCompanyIcon(job.company)}
+                            </div>
+
+                            {/* Job Title */}
+                            <h3 className="job-title-modern">{job.title}</h3>
+
+                            {/* Job Info */}
+                            <div className="job-info-modern">
+                                <span className="job-category-badge">{job.category || 'General'}</span>
+                                <span className="job-salary">{job.salary || 'Competitive'}</span>
+                            </div>
+
+                            {/* Apply Button */}
+                            <button className="apply-now-btn">
+                                Apply Now
+                            </button>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     );
