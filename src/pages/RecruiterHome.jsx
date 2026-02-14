@@ -295,7 +295,7 @@ const RecruiterHome = () => {
                                                     {app.resume && (
                                                         <a
                                                             href={
-                                                                `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(app.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(app.resume)}`
+                                                                `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(app.resumeFilename || `resume_${app.applicant?.name?.replace(/\s+/g, '_') || 'applicant'}.pdf`)}?url=${encodeURIComponent(app.resume)}`
                                                             }
                                                             target="_blank"
                                                             rel="noopener noreferrer"

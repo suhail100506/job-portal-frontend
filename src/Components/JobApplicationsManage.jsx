@@ -145,7 +145,7 @@ const JobApplicationsManage = () => {
                                             <div className="flex gap-4">
                                                 <a
                                                     href={
-                                                        `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
+                                                        `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(application.resumeFilename || `resume_${application.applicant?.name?.replace(/\s+/g, '_') || 'applicant'}.pdf`)}?url=${encodeURIComponent(application.resume)}`
                                                     }
                                                     target="_blank"
                                                     rel="noopener noreferrer"
@@ -155,7 +155,7 @@ const JobApplicationsManage = () => {
                                                 </a>
                                                 <a
                                                     href={
-                                                        `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/attachment/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
+                                                        `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/attachment/${encodeURIComponent(application.resumeFilename || `resume_${application.applicant?.name?.replace(/\s+/g, '_') || 'applicant'}.pdf`)}?url=${encodeURIComponent(application.resume)}`
                                                     }
                                                     className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 transition shadow-md hover:shadow-lg"
                                                 >

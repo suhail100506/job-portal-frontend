@@ -359,7 +359,7 @@ const RecruiterPanel = () => {
                                                         <div className="flex gap-2">
                                                             <a
                                                                 href={
-                                                                    `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
+                                                                    `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(application.resumeFilename || `resume_${application.applicant?.name?.replace(/\s+/g, '_') || 'applicant'}.pdf`)}?url=${encodeURIComponent(application.resume)}`
                                                                 }
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
@@ -369,7 +369,7 @@ const RecruiterPanel = () => {
                                                             </a>
                                                             <a
                                                                 href={
-                                                                    `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/attachment/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
+                                                                    `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/attachment/${encodeURIComponent(application.resumeFilename || `resume_${application.applicant?.name?.replace(/\s+/g, '_') || 'applicant'}.pdf`)}?url=${encodeURIComponent(application.resume)}`
                                                                 }
                                                                 className="text-green-400 hover:text-green-300 font-medium"
                                                             >
