@@ -112,7 +112,8 @@
 }
 
 .stat-icon-blue {
-    background-color: #dbeafe;
+    background-color: #3b82f6;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .stat-icon-blue {
@@ -121,7 +122,8 @@
 }
 
 .stat-icon-green {
-    background-color: #dcfce7;
+    background-color: #22c55e;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .stat-icon-green {
@@ -130,7 +132,8 @@
 }
 
 .stat-icon-yellow {
-    background-color: #fef3c7;
+    background-color: #eab308;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .stat-icon-yellow {

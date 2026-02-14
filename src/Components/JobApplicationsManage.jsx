@@ -142,7 +142,11 @@ const JobApplicationsManage = () => {
                                     {application.resume && (
                                         <div className="mb-4">
                                             <a
-                                                href={`${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}`}
+                                                href={
+                                                    application.resume.startsWith('http') 
+                                                        ? application.resume // Cloudinary URL
+                                                        : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}` // Local path
+                                                }
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="text-blue-600 dark:text-blue-400 hover:underline"
