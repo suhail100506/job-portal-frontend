@@ -359,9 +359,7 @@ const RecruiterPanel = () => {
                                                         <div className="flex gap-2">
                                                             <a
                                                                 href={
-                                                                    application.resume.startsWith('http') 
-                                                                        ? application.resume
-                                                                        : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}`
+                                                                    `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
                                                                 }
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
@@ -371,11 +369,8 @@ const RecruiterPanel = () => {
                                                             </a>
                                                             <a
                                                                 href={
-                                                                    application.resume.startsWith('http') 
-                                                                        ? application.resume
-                                                                        : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}`
+                                                                    `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/attachment/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
                                                                 }
-                                                                download
                                                                 className="text-green-400 hover:text-green-300 font-medium"
                                                             >
                                                                 ⬇️ Download

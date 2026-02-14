@@ -295,9 +295,7 @@ const RecruiterHome = () => {
                                                     {app.resume && (
                                                         <a
                                                             href={
-                                                                app.resume.startsWith('http') 
-                                                                    ? app.resume
-                                                                    : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${app.resume}`
+                                                                `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(app.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(app.resume)}`
                                                             }
                                                             target="_blank"
                                                             rel="noopener noreferrer"

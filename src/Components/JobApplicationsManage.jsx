@@ -145,9 +145,7 @@ const JobApplicationsManage = () => {
                                             <div className="flex gap-4">
                                                 <a
                                                     href={
-                                                        application.resume.startsWith('http') 
-                                                            ? application.resume // Cloudinary URL
-                                                            : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}` // Local path
+                                                        `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/view/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
                                                     }
                                                     target="_blank"
                                                     rel="noopener noreferrer"
@@ -157,11 +155,8 @@ const JobApplicationsManage = () => {
                                                 </a>
                                                 <a
                                                     href={
-                                                        application.resume.startsWith('http') 
-                                                            ? application.resume
-                                                            : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}`
+                                                        `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/attachment/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
                                                     }
-                                                    download
                                                     className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 transition"
                                                 >
                                                     ⬇️ Download Resume
