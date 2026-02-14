@@ -149,7 +149,7 @@ const JobApplicationsManage = () => {
                                                     }
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition shadow-md hover:shadow-lg"
                                                 >
                                                     📄 View in Browser
                                                 </a>
@@ -157,7 +157,7 @@ const JobApplicationsManage = () => {
                                                     href={
                                                         `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/files/download/attachment/${encodeURIComponent(application.resumeFilename || 'resume.pdf')}?url=${encodeURIComponent(application.resume)}`
                                                     }
-                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 transition"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 transition shadow-md hover:shadow-lg"
                                                 >
                                                     ⬇️ Download Resume
                                                 </a>
@@ -175,28 +175,28 @@ const JobApplicationsManage = () => {
                                         <button
                                             onClick={() => handleStatusUpdate(application._id, 'reviewed')}
                                             disabled={application.status === 'reviewed'}
-                                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:disabled:bg-gray-600 transition-colors"
+                                            className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 disabled:bg-gray-400 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:disabled:bg-gray-600 transition-all shadow-md hover:shadow-lg"
                                         >
                                             Mark Reviewed
                                         </button>
                                         <button
                                             onClick={() => handleStatusUpdate(application._id, 'shortlisted')}
                                             disabled={application.status === 'shortlisted'}
-                                            className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-400 dark:bg-purple-600 dark:hover:bg-purple-700 dark:disabled:bg-gray-600 transition-colors"
+                                            className="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 disabled:bg-gray-400 dark:bg-violet-600 dark:hover:bg-violet-700 dark:disabled:bg-gray-600 transition-all shadow-md hover:shadow-lg"
                                         >
                                             Shortlist
                                         </button>
                                         <button
                                             onClick={() => handleStatusUpdate(application._id, 'accepted')}
                                             disabled={application.status === 'accepted'}
-                                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400 dark:bg-green-600 dark:hover:bg-green-700 dark:disabled:bg-gray-600 transition-colors"
+                                            className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:bg-gray-400 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:disabled:bg-gray-600 transition-all shadow-md hover:shadow-lg"
                                         >
                                             Accept
                                         </button>
                                         <button
                                             onClick={() => handleStatusUpdate(application._id, 'rejected')}
                                             disabled={application.status === 'rejected'}
-                                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-gray-400 dark:bg-red-600 dark:hover:bg-red-700 dark:disabled:bg-gray-600 transition-colors"
+                                            className="px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 disabled:bg-gray-400 dark:bg-rose-600 dark:hover:bg-rose-700 dark:disabled:bg-gray-600 transition-all shadow-md hover:shadow-lg"
                                         >
                                             Reject
                                         </button>
