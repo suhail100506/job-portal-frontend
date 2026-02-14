@@ -304,6 +304,9 @@ const RecruiterPanel = () => {
                                                 Status
                                             </th>
                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                                Resume
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                                                 Actions
                                             </th>
                                         </tr>
@@ -352,8 +355,39 @@ const RecruiterPanel = () => {
                                                     </select>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                                    {application.resume ? (
+                                                        <div className="flex gap-2">
+                                                            <a
+                                                                href={
+                                                                    application.resume.startsWith('http') 
+                                                                        ? application.resume
+                                                                        : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}`
+                                                                }
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-blue-400 hover:text-blue-300 font-medium"
+                                                            >
+                                                                📄 View
+                                                            </a>
+                                                            <a
+                                                                href={
+                                                                    application.resume.startsWith('http') 
+                                                                        ? application.resume
+                                                                        : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}`
+                                                                }
+                                                                download
+                                                                className="text-green-400 hover:text-green-300 font-medium"
+                                                            >
+                                                                ⬇️ Download
+                                                            </a>
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-gray-500">No resume</span>
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm">
                                                     <Link
-                                                        to={`/jobs/${application.job?._id}`}
+                                                        to={`/jobs/${application.job?._id}/applications`}
                                                         className="text-blue-400 hover:text-blue-300 font-medium"
                                                     >
                                                         View Details

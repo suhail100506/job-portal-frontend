@@ -141,18 +141,32 @@ const JobApplicationsManage = () => {
 
                                     {application.resume && (
                                         <div className="mb-4">
-                                            <a
-                                                href={
-                                                    application.resume.startsWith('http') 
-                                                        ? application.resume // Cloudinary URL
-                                                        : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}` // Local path
-                                                }
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-blue-600 dark:text-blue-400 hover:underline"
-                                            >
-                                                📄 View Resume
-                                            </a>
+                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Resume:</h4>
+                                            <div className="flex gap-4">
+                                                <a
+                                                    href={
+                                                        application.resume.startsWith('http') 
+                                                            ? application.resume // Cloudinary URL
+                                                            : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}` // Local path
+                                                    }
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition"
+                                                >
+                                                    📄 View in Browser
+                                                </a>
+                                                <a
+                                                    href={
+                                                        application.resume.startsWith('http') 
+                                                            ? application.resume
+                                                            : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${application.resume}`
+                                                    }
+                                                    download
+                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 transition"
+                                                >
+                                                    ⬇️ Download Resume
+                                                </a>
+                                            </div>
                                         </div>
                                     )}
 

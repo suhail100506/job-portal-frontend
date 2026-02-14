@@ -281,16 +281,32 @@ const RecruiterHome = () => {
                                                 <p className="text-xs text-gray-600 mb-1">
                                                     {app.job?.title || 'Unknown Position'}
                                                 </p>
-                                                <span className={`text-xs px-2 py-1 rounded-full ${app.status === 'pending'
-                                                    ? 'bg-yellow-100 text-yellow-800'
-                                                    : app.status === 'reviewed'
-                                                        ? 'bg-blue-100 text-blue-800'
-                                                        : app.status === 'accepted'
-                                                            ? 'bg-green-100 text-green-800'
-                                                            : 'bg-red-100 text-red-800'
-                                                    }`}>
-                                                    {app.status}
-                                                </span>
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <span className={`text-xs px-2 py-1 rounded-full ${app.status === 'pending'
+                                                        ? 'bg-yellow-100 text-yellow-800'
+                                                        : app.status === 'reviewed'
+                                                            ? 'bg-blue-100 text-blue-800'
+                                                            : app.status === 'accepted'
+                                                                ? 'bg-green-100 text-green-800'
+                                                                : 'bg-red-100 text-red-800'
+                                                        }`}>
+                                                        {app.status}
+                                                    </span>
+                                                    {app.resume && (
+                                                        <a
+                                                            href={
+                                                                app.resume.startsWith('http') 
+                                                                    ? app.resume
+                                                                    : `${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}/${app.resume}`
+                                                            }
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-xs text-blue-600 hover:text-blue-800 font-medium"
+                                                        >
+                                                            📄 View Resume
+                                                        </a>
+                                                    )}
+                                                </div>
                                             </div>
                                             <span className="text-xs text-gray-500">
                                                 {new Date(app.createdAt).toLocaleDateString()}
