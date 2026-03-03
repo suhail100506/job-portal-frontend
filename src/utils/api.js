@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://job-portal-backend-1-4c0w.onrender.com/api',
+    baseURL: import.meta.env.VITE_API_URL || 'https://job-portal-backend-gcjw.onrender.com/api',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
